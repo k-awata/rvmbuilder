@@ -1,0 +1,282 @@
+{
+    "$schema": "http://json-schema.org/draft/2020-12/schema",
+    "$ref": "#/$defs/RvmBuilder",
+    "$defs": {
+        "AutoColorRule": {
+            "properties": {
+                "selection": {
+                    "description": "A PML expressions to select elements",
+                    "type": "string"
+                },
+                "color": {
+                    "description": "Sets the color for the selection.",
+                    "type": "string",
+                    "pattern": "^#[A-Fa-f0-9]{6}$",
+                    "format": "color"
+                },
+                "translucency": {
+                    "description": "Sets the translucency for the selection. (0 = opaque; 99 = transparent)",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 99
+                }
+            },
+            "additionalProperties": false,
+            "type": "object",
+            "required": [
+                "selection",
+                "color"
+            ]
+        },
+        "DumpAttOption": {
+            "properties": {
+                "filename": {
+                    "description": "A file path to save the attribute dump file.",
+                    "type": "string"
+                },
+                "selection": {
+                    "description": "A PML expressions to select elements",
+                    "type": "string"
+                },
+                "additionalAtts": {
+                    "description": "Additional non standard attributes to dump",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "hasNoData": {
+                    "description": "If true, dumping attributes that have unset or =0/0 is enabled.",
+                    "type": "boolean"
+                },
+                "hasUda": {
+                    "description": "If true, dumping UDA is enabled.",
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": false,
+            "type": "object",
+            "required": [
+                "filename",
+                "selection",
+                "hasNoData",
+                "hasUda"
+            ]
+        },
+        "ExportOption": {
+            "properties": {
+                "filename": {
+                    "description": "A file path to save the RVM file.",
+                    "type": "string"
+                },
+                "rvmType": {
+                    "description": "Specifies the RVM file format.",
+                    "enum": [
+                        "binary",
+                        "text"
+                    ],
+                    "default": "binary",
+                    "type": "string"
+                },
+                "filenote": {
+                    "description": "Adds a line of user-supplied text to the model file header.",
+                    "type": "string"
+                },
+                "encoding": {
+                    "description": "Specifies the character encoding",
+                    "default": "utfeight",
+                    "type": "string"
+                },
+                "impliedTube": {
+                    "description": "Which container implied tubes is exported into",
+                    "enum": [
+                        "single",
+                        "separate",
+                        "upstream",
+                        "downstream"
+                    ],
+                    "default": "separate",
+                    "type": "string"
+                },
+                "holes": {
+                    "description": "If on, represents holes.",
+                    "enum": [
+                        "off",
+                        "on",
+                        "solid"
+                    ],
+                    "default": "on",
+                    "type": "string"
+                },
+                "repr": {
+                    "description": "If on, representation settings is enabled.",
+                    "enum": [
+                        "off",
+                        "on"
+                    ],
+                    "default": "on",
+                    "type": "string"
+                },
+                "reprCl": {
+                    "description": "If on, represents tubing as center line.",
+                    "enum": [
+                        "off",
+                        "on"
+                    ],
+                    "default": "off",
+                    "type": "string"
+                },
+                "reprTube": {
+                    "description": "If on, represents tubing as solid tube.",
+                    "enum": [
+                        "off",
+                        "on"
+                    ],
+                    "default": "on",
+                    "type": "string"
+                },
+                "reprInsu": {
+                    "description": "If on, shows insulation.",
+                    "enum": [
+                        "off",
+                        "on"
+                    ],
+                    "default": "off",
+                    "type": "string"
+                },
+                "reprObst": {
+                    "description": "If on, shows elements out of levels range.",
+                    "enum": [
+                        "off",
+                        "on"
+                    ],
+                    "default": "off",
+                    "type": "string"
+                },
+                "reprLevel": {
+                    "description": "Sets the drawing level for the other elements.",
+                    "type": "integer",
+                    "default": 6,
+                    "minimum": 0,
+                    "maximum": 10
+                },
+                "reprLevelPipe": {
+                    "description": "Sets the drawing level for piping.",
+                    "type": "integer",
+                    "default": 6,
+                    "minimum": 0,
+                    "maximum": 10
+                },
+                "reprLevelNozz": {
+                    "description": "Sets the drawing level for nozzles.",
+                    "type": "integer",
+                    "default": 6,
+                    "minimum": 0,
+                    "maximum": 10
+                },
+                "reprLevelStru": {
+                    "description": "Sets the drawing level for structures.",
+                    "type": "integer",
+                    "default": 6,
+                    "minimum": 0,
+                    "maximum": 10
+                },
+                "autoColor": {
+                    "description": "If on, autocolor settings is enabled.",
+                    "enum": [
+                        "off",
+                        "on"
+                    ],
+                    "default": "on",
+                    "type": "string"
+                },
+                "autoColorDisplayExport": {
+                    "description": "If on, uses the same autocolor rules as Design module.",
+                    "enum": [
+                        "off",
+                        "on"
+                    ],
+                    "default": "off",
+                    "type": "string"
+                },
+                "globalTranslucency": {
+                    "description": "Sets translucency for all of the autocolor rules that set no translucency. (0 = opaque; 99 = transparent)",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 99
+                },
+                "autoColorRules": {
+                    "description": "Color settings for each element types",
+                    "items": {
+                        "$ref": "#/$defs/AutoColorRule"
+                    },
+                    "type": "array"
+                },
+                "exportInclude": {
+                    "description": "Elements to include in the export",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "exportExclude": {
+                    "description": "Elements to exclude from the export",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "additionalProperties": false,
+            "type": "object"
+        },
+        "RvmBuilder": {
+            "properties": {
+                "filename": {
+                    "description": "A file path to save the NWD file.",
+                    "type": "string"
+                },
+                "workingDir": {
+                    "description": "A directory path to save temporary files",
+                    "type": "string"
+                },
+                "filetoolsTaskRunner": {
+                    "description": "A file path of FileToolsTaskRunner.exe in Navisworks",
+                    "type": "string"
+                },
+                "nwdVersion": {
+                    "description": "Specifies the NWD file version.",
+                    "type": "string"
+                },
+                "exportDefault": {
+                    "description": "Global settings to export RVM files",
+                    "$ref": "#/$defs/ExportOption"
+                },
+                "exportRvms": {
+                    "description": "Settings to export each RVM file",
+                    "items": {
+                        "$ref": "#/$defs/ExportOption"
+                    },
+                    "type": "array"
+                },
+                "dumpAtt": {
+                    "description": "If true, dumping attributes is enabled.",
+                    "type": "boolean"
+                },
+                "dumpAttOption": {
+                    "description": "Options to dump attributes",
+                    "$ref": "#/$defs/DumpAttOption"
+                }
+            },
+            "additionalProperties": true,
+            "type": "object",
+            "required": [
+                "filename",
+                "workingDir",
+                "filetoolsTaskRunner",
+                "exportRvms",
+                "dumpAtt"
+            ]
+        }
+    }
+}
