@@ -1,0 +1,78 @@
+{
+    "$schema": "https://raw.githubusercontent.com/k-awata/rvmbuilder/main/schema.json",
+    "filename": "%USERPROFILE%\\Desktop\\sample.nwd",
+    "workingDir": "%TEMP%\\rvm",
+    "filetoolsTaskRunner": "C:\\Program Files\\Autodesk\\Navisworks Manage 2016\\FiletoolsTaskRunner.exe",
+    "nwdVersion": "2015",
+    "exportDefault": {
+        "rvmType": "binary",
+        "filenote": "rvmbuilder sample rvm",
+        "encoding": "utfeight",
+        "impliedTube": "separate",
+        "holes": "on",
+        "repr": "on",
+        "reprCl": "off",
+        "reprTube": "on",
+        "reprInsu": "off",
+        "reprObst": "off",
+        "reprLevel": 6,
+        "reprLevelPipe": 6,
+        "reprLevelNozz": 6,
+        "reprLevelStru": 6,
+        "autoColor": "on",
+        "autoColorDisplayExport": "off",
+        "autoColorRules": [
+            {
+                "selection": "all equi",
+                "color": "#ffd3aa"
+            },
+            {
+                "selection": "all pipe",
+                "color": "#ffff00"
+            },
+            {
+                "selection": "all suppo",
+                "color": "#aaeaff"
+            },
+            {
+                "selection": "all frmw",
+                "color": "#008dbc"
+            },
+            {
+                "selection": "all stru",
+                "color": "#ffffff"
+            }
+        ]
+    },
+    "exportRvms": [
+        {
+            "filename": "body.rvm",
+            "exportInclude": [
+                "all site"
+            ]
+        },
+        {
+            "filename": "trans.rvm",
+            "reprInsu": "on",
+            "reprObst": "on",
+            "globalTranslucency": 75,
+            "exportInclude": [
+                "all (bran mem trunni mem) with ipar[1] ne 0",
+                "all (equi mem sube mem stru mem subs mem) with lev[1] gt 6 or lev[2] lt 6"
+            ]
+        }
+    ],
+    "dumpAtt": true,
+    "dumpAttOption": {
+        "filename": "attrib.txt",
+        "selection": "all with type ne 'TUBI' and not badref(site)",
+        "additionalAtts": [
+            "APOS",
+            "LPOS",
+            "DTXR",
+            "MTXX"
+        ],
+        "hasNoData": false,
+        "hasUda": false
+    }
+}

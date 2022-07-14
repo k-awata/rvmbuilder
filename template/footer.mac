@@ -1,0 +1,21 @@
+syscom |@echo "{{.nav}}" /i "%~dp0{{.relin}}" /of "%~dp0{{.relout}}" /log "%~dp0{{.rellog}}"{{if .ver}} /version {{.ver}}{{end}} > "{{.bat}}"|
+syscom |{{.bat}}|
+!output = object FILE(|{{.out}}|)
+if !output.exists() then
+  !final = object FILE(|{{.final}}|)
+  !final.deleteFile()
+  !output.copy(!final)
+  handle none
+    var !clock clock
+    $P[INFO] $!clock - Copy NWD file to {{.final}}
+  endhandle
+else
+  var !clock clock
+  $P[ERROR] $!clock - Converting RVMs to NWD file has failed
+endif
+var !clock clock
+$P[INFO] $!clock - End creating RVM/NWD
+alp log end
+if istty then
+  finish
+endif

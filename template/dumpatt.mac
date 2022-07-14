@@ -1,0 +1,48 @@
+!file = object FILE(|{{.file}}|)
+!exatt = object ARRAY()
+{{- range .exatt}}
+!exatt.append('{{.}}')
+{{- end}}
+!noval = {{.noval}}
+!uda = {{.uda}}
+var !refs coll {{.refs}}
+!new = 'NEW'
+!end = 'END'
+!dlm = ':='
+!sep = '&end&'
+var !date clock date
+var !time clock time
+var !mdb mdb
+var !proj project code
+!file.open('OVERWRITE')
+!file.writeRecord('AVEVA_Attributes_File v1.0 , start: ' + !new + ' , end: ' + !end + ' , name_end: ' + !dlm + ' , sep: ' + !sep)
+!file.writeRecord(!new + ' Header Information')
+!file.writeRecord('Source' + !dlm + ' AVEVA E3D Design Data ' + !sep + ' Date' + !dlm + ' ' + !date + ' ' + !sep + ' Time' + !dlm + ' ' + !time)
+!file.writeRecord('Project' + !dlm + ' ' + !proj + ' ' + !sep + ' MDB' + !dlm + ' ' + !mdb)
+!file.writeRecord(!end)
+do !r values !refs
+  !ref = object DBREF(!r)
+  !att = !ref.attributes()
+  !att.appendArray(!ref.udalis)
+  !att.appendArray(!exatt)
+  !file.writeRecord(!new + ' ' + !ref.fullname)
+  do !a values !att
+    skip if not !uda and !a.substring(1, 1) eq ':'
+    skip if !a.upcase() eq 'MEMBERS'
+    if !a.upcase() eq 'POSITION' then
+      !of = ''
+    else
+      !of = 'of'
+    endif
+    var !val $!a $!of $!r
+    handle any
+      skip
+    endhandle
+    skip if not !noval and !val inset('=0/0', 'unset')
+    !file.writeRecord(!a + !dlm + !val)
+  enddo
+  !file.writeRecord(!end)
+enddo
+!file.close()
+var !clock clock
+$P[INFO] $!clock - Attributes dumping file has been created at {{.file}}

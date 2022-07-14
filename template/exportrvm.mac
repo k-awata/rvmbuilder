@@ -1,0 +1,30 @@
+export file "{{.file}}" {{if .text}}text{{end}} over
+export filenote '{{.note}}'
+export encoding {{.enc}}
+export implied tube {{.impl}}
+export holes {{.holes}}
+export repr {{.repr}}
+repr cent {{.cent}}
+repr tube {{.tube}}
+repr insu {{.insu}}
+repr obst {{.obst}}
+repr level {{.lv}}
+repr level pipe {{.lvpipe}}
+repr level nozz {{.lvnozz}}
+repr level stru {{.lvstru}}
+export autocolour {{.ac}}
+export autocolour reset
+export autocolour dynamic on
+export autocolour component on
+export autocolour displayexport {{.acdisp}}
+{{.aclist}}
+{{- range .incl}}
+export {{.}}
+{{- end}}
+{{- range .excl}}
+export exclude {{.}}
+{{- end}}
+export finish
+syscom |echo {{.file}} >> "{{.input}}"|
+var !clock clock
+$P[INFO] $!clock - RVM file has been created at {{.file}}
