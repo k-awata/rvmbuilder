@@ -76,6 +76,7 @@ func MakePml(b *RvmBuilder) (string, error) {
 			"incl":   e.ExportInclude,
 			"excl":   e.ExportExclude,
 			"input":  filepath.Join(b.WorkingDir, WRK_INPUT),
+			"excmd":  e.AdditionalCmds,
 		}); err != nil {
 			return "", err
 		}

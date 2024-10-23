@@ -225,6 +225,13 @@
                         "type": "string"
                     },
                     "type": "array"
+                },
+                "additionalCmds": {
+                    "description": "Additional PML commands",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
                 }
             },
             "additionalProperties": false,

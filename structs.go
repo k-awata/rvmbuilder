@@ -41,6 +41,7 @@ type ExportOption struct {
 	AutoColorRules         []AutoColorRule `json:"autoColorRules,omitempty"`
 	ExportInclude          []string        `json:"exportInclude,omitempty"`
 	ExportExclude          []string        `json:"exportExclude,omitempty"`
+	AdditionalCmds         []string        `json:"additionalCmds,omitempty"`
 }
 
 type RvmBuilder struct {
@@ -129,5 +130,8 @@ func (e *ExportOption) Merge(o *ExportOption) {
 	}
 	if len(o.ExportExclude) != 0 {
 		e.ExportExclude = o.ExportExclude
+	}
+	if len(o.AdditionalCmds) != 0 {
+		e.AdditionalCmds = o.AdditionalCmds
 	}
 }

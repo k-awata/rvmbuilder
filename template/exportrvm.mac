@@ -24,6 +24,9 @@ export {{.}}
 {{- range .excl}}
 export exclude {{.}}
 {{- end}}
+{{- range .excmd}}
+{{.}}
+{{- end}}
 export finish
 syscom |echo {{.file}} >> "{{.input}}"|
 var !clock clock
