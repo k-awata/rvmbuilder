@@ -1,3 +1,3 @@
 module github.com/k-awata/rvmbuilder
 
-go 1.23.2
+go 1.25.3

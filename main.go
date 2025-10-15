@@ -10,7 +10,7 @@ import (
 
 const (
 	CliName = "rvmbuilder"
-	Version = "0.2.0"
+	Version = "0.2.1"
 )
 
 const UTF8BOM = "\xef\xbb\xbf"
