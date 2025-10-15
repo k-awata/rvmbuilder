@@ -29,8 +29,8 @@
     </div>
     <script>
       // Load JSON editor
-      var filename = "rvmbuilder.json";
       var schema_file = "./schema.json";
+      var filename = "rvmbuilder.json";
       var editor = null;
       (async () => {
         const response = await fetch(schema_file);
@@ -49,8 +49,10 @@
         input.type = "file";
         input.accept = "application/json";
         input.onchange = async () => {
+          const data = JSON.parse(await input.files[0].text());
+          delete data.$schema;
           filename = input.files[0].name
-          editor.setValue(JSON.parse(await input.files[0].text()));
+          editor.setValue(data);
         };
         input.click();
       });

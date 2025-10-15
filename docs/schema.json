@@ -275,7 +275,7 @@
                     "$ref": "#/$defs/DumpAttOption"
                 }
             },
-            "additionalProperties": false,
+            "additionalProperties": true,
             "type": "object",
             "required": [
                 "filename",
