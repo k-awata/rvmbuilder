@@ -12,64 +12,64 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
     <script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
     <style>
-      input[type="text"] {
-        font-family: monospace;
+      #editor-container {
+        input[type="text"] {
+          font-family: monospace;
+        }
       }
     </style>
   </head>
+
   <body>
     <div class="container" style="padding-top: 15px; padding-bottom: 30px">
       <h1>RvmBuilder JSON Editor</h1>
-      <div class="py-3">
-        <button id="open" type="button" class="btn btn-primary">Load</button>
-        <button id="download" type="button" class="btn btn-primary">Save</button>
+      <div class="form-inline py-3">
+        <button id="open" type="button" class="btn btn-primary">Open</button>
+        <input type="text" class="form-control mx-3" id="filename" placeholder="Filename" value="rvmbuilder.json" />
+        <button id="download" type="button" class="btn btn-primary">Download</button>
       </div>
       <div id="editor-container"></div>
-      <a href="#">Back to top</a>
+      <a href="javascript:window.scrollTo({top:0});">Back to top</a>
     </div>
+
     <script>
+      const schema_json = URL.parse("./schema.json", location.href);
       // Load JSON editor
-      var schema_file = "./schema.json";
-      var filename = "rvmbuilder.json";
       var editor = null;
       (async () => {
-        const response = await fetch(schema_file);
-        const schema = await response.json();
+        const response = await fetch(schema_json);
         const config = {
           theme: "bootstrap4",
           iconlib: "fontawesome5",
-          form_name_root: "RvmBuilder",
-          schema: schema,
+          schema: await response.json(),
         };
         editor = new JSONEditor(document.querySelector("#editor-container"), config);
+        editor.on("change", () => {
+          editor.getEditor("root.$schema")?.setValue(schema_json.href);
+        });
       })();
+
       // Callback on click Open button
       document.querySelector("#open").addEventListener("click", () => {
         const input = document.createElement("input");
         input.type = "file";
         input.accept = "application/json";
         input.onchange = async () => {
-          const data = JSON.parse(await input.files[0].text());
-          delete data.$schema;
-          filename = input.files[0].name
-          editor.setValue(data);
+          const file = input.files[0];
+          document.querySelector("#filename").value = file.name;
+          editor.setValue(JSON.parse(await file.text()));
         };
         input.click();
       });
+
       // Callback on click Download button
       document.querySelector("#download").addEventListener("click", () => {
-        const data = {
-          $schema: URL.parse(schema_file, location.href),
-          ...editor.getValue(),
-        };
-        const blob = new Blob([JSON.stringify(data, null, 4)], { type: "application/json" });
+        const blob = new Blob([JSON.stringify(editor.getValue(), null, 4)], { type: "application/json" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
+        a.download = document.querySelector("#filename").value;
         a.click();
-        document.body.removeChild(a);
         URL.revokeObjectURL(url);
       });
     </script>
