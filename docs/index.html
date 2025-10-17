@@ -12,10 +12,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
     <script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
     <style>
-      #editor-container {
-        input[type="text"] {
-          font-family: monospace;
-        }
+      input[type="text"] {
+        font-family: monospace;
       }
     </style>
   </head>
@@ -23,10 +21,14 @@
   <body>
     <div class="container" style="padding-top: 15px; padding-bottom: 30px">
       <h1>RvmBuilder JSON Editor</h1>
-      <div class="form-inline py-3">
-        <button id="open" type="button" class="btn btn-primary">Open</button>
-        <input type="text" class="form-control mx-3" id="filename" placeholder="Filename" value="rvmbuilder.json" />
-        <button id="download" type="button" class="btn btn-primary">Download</button>
+      <div class="input-group my-3">
+        <div class="input-group-prepend">
+          <button id="open" type="button" class="btn btn-secondary"><i class="fas fa-folder-open"></i> Open</button>
+        </div>
+        <input type="text" class="form-control" id="filename" placeholder="Filename" value="rvmbuilder.json" />
+        <div class="input-group-append">
+          <button id="download" type="button" class="btn btn-secondary"><i class="fas fa-file-download"></i> Download</button>
+        </div>
       </div>
       <div id="editor-container"></div>
       <a href="javascript:window.scrollTo({top:0});">Back to top</a>
