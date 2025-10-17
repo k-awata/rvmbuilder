@@ -26,6 +26,10 @@ rvmbuilder -s > sample.json
 rvmbuilder sample.json > export.mac
 ```
 
+## JSON Editor
+
+[RvmBuilder JSON Editor](https://k-awata.github.io/rvmbuilder/)
+
 ## License
 
 [MIT License](LICENSE)
