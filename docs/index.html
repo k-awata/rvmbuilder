@@ -47,7 +47,7 @@
         };
         editor = new JSONEditor(document.querySelector("#editor-container"), config);
         editor.on("change", () => {
-          editor.getEditor("root.$schema")?.setValue(schema_json.href);
+          editor.getEditor("root.$schema")?.setValue("https://raw.githubusercontent.com/k-awata/rvmbuilder/refs/heads/main/docs/schema.json");
         });
       })();
 
