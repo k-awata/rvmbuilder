@@ -1,5 +1,5 @@
 {
-    "$schema": "https://k-awata.github.io/rvmbuilder/schema.json",
+    "$schema": "https://raw.githubusercontent.com/k-awata/rvmbuilder/refs/heads/main/docs/schema.json",
     "filename": "%USERPROFILE%\\Desktop\\sample.nwd",
     "workingDir": "%TEMP%\\rvm",
     "filetoolsTaskRunner": "C:\\Program Files\\Autodesk\\Navisworks Manage 2016\\FiletoolsTaskRunner.exe",
